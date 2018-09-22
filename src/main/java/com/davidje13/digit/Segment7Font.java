@@ -28,11 +28,39 @@ public class Segment7Font {
 		CHAR_LOOKUP.put('7', EnumSet.of(TOP, TR, BR));
 		CHAR_LOOKUP.put('8', EnumSet.of(TOP, TL, TR, MID, BL, BR, BASE));
 		CHAR_LOOKUP.put('9', EnumSet.of(TOP, TL, TR, MID, BR, BASE));
+		CHAR_LOOKUP.put('^', EnumSet.of(TOP));
 		CHAR_LOOKUP.put('-', EnumSet.of(MID));
+		CHAR_LOOKUP.put('_', EnumSet.of(BASE));
+		CHAR_LOOKUP.put('a', EnumSet.of(TOP, TL, TR, MID, BL, BR));
+		CHAR_LOOKUP.put('b', EnumSet.of(TL, MID, BL, BR, BASE));
+		CHAR_LOOKUP.put('c', EnumSet.of(MID, BL, BASE));
+		CHAR_LOOKUP.put('d', EnumSet.of(TR, MID, BL, BR, BASE));
+		CHAR_LOOKUP.put('e', EnumSet.of(TOP, TL, MID, BL, BASE));
+		CHAR_LOOKUP.put('f', EnumSet.of(TOP, TL, MID, BL));
+		CHAR_LOOKUP.put('g', EnumSet.of(TOP, TL, BL, BR, BASE));
+		CHAR_LOOKUP.put('h', EnumSet.of(TL, MID, BL, BR));
+		CHAR_LOOKUP.put('i', EnumSet.of(BR));
+		CHAR_LOOKUP.put('j', EnumSet.of(TR, BR, BASE));
+		CHAR_LOOKUP.put('k', EnumSet.of(TL, TR, MID, BL, BR));
+		CHAR_LOOKUP.put('l', EnumSet.of(TL, BL, BASE));
+		CHAR_LOOKUP.put('m', EnumSet.of(TOP, TL, TR, BL, BR));
+		CHAR_LOOKUP.put('n', EnumSet.of(MID, BL, BR));
+		CHAR_LOOKUP.put('o', EnumSet.of(MID, BL, BR, BASE));
+		CHAR_LOOKUP.put('p', EnumSet.of(TOP, TL, TR, MID, BL));
+		CHAR_LOOKUP.put('q', EnumSet.of(TOP, TL, TR, MID, BR));
+		CHAR_LOOKUP.put('r', EnumSet.of(MID, BL));
+		CHAR_LOOKUP.put('s', EnumSet.of(TOP, TL, MID, BR, BASE));
+		CHAR_LOOKUP.put('t', EnumSet.of(TL, MID, BL, BASE));
+		CHAR_LOOKUP.put('u', EnumSet.of(TL, TR, BL, BR, BASE));
+		CHAR_LOOKUP.put('v', EnumSet.of(BL, BR, BASE));
+		CHAR_LOOKUP.put('w', EnumSet.of(TL, TR, BL, BR, BASE));
+		CHAR_LOOKUP.put('x', EnumSet.of(TL, TR, MID, BL, BR));
+		CHAR_LOOKUP.put('y', EnumSet.of(TL, TR, MID, BR, BASE));
+		CHAR_LOOKUP.put('z', EnumSet.of(TOP, TR, MID, BL, BASE));
 	}
 
 	public EnumSet<Segment7> toSegments(char c) {
-		return CHAR_LOOKUP.getOrDefault(c, BLANK);
+		return CHAR_LOOKUP.getOrDefault(Character.toLowerCase(c), BLANK);
 	}
 
 	public Stream<EnumSet<Segment7>> toSegments(CharSequence value) {

@@ -21,6 +21,17 @@ public class MainIntegrationTest {
 	}
 
 	@Test
+	public void main_supportsLetters() {
+		String out = getStdOutFrom(() -> Main.main(new String[]{"hi"}));
+
+		assertThat(out, equalTo(
+				"       \n" +
+				"|_     \n" +
+				"| |   |\n"
+		));
+	}
+
+	@Test
 	public void main_printsOnlyNewline_ifNoInputGiven() {
 		String out = getStdOutFrom(() -> Main.main(new String[]{}));
 
