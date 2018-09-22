@@ -6,13 +6,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static com.davidje13.digit.Segments.BASE;
-import static com.davidje13.digit.Segments.BL;
-import static com.davidje13.digit.Segments.BR;
-import static com.davidje13.digit.Segments.MID;
-import static com.davidje13.digit.Segments.TL;
-import static com.davidje13.digit.Segments.TOP;
-import static com.davidje13.digit.Segments.TR;
+import static com.davidje13.digit.Segment7.BASE;
+import static com.davidje13.digit.Segment7.BL;
+import static com.davidje13.digit.Segment7.BR;
+import static com.davidje13.digit.Segment7.MID;
+import static com.davidje13.digit.Segment7.TL;
+import static com.davidje13.digit.Segment7.TOP;
+import static com.davidje13.digit.Segment7.TR;
 import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -25,7 +25,7 @@ public class AsciiDisplayTest {
 
 	@Test
 	public void toAsciiLines_returnsListOfLines() {
-		assertThat(display.toAsciiLines(EnumSet.noneOf(Segments.class)), contains(
+		assertThat(display.toAsciiLines(EnumSet.noneOf(Segment7.class)), contains(
 				"   ",
 				"   ",
 				"   "

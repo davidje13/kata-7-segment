@@ -5,20 +5,20 @@ import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.davidje13.digit.Segments.BASE;
-import static com.davidje13.digit.Segments.BL;
-import static com.davidje13.digit.Segments.BR;
-import static com.davidje13.digit.Segments.MID;
-import static com.davidje13.digit.Segments.TL;
-import static com.davidje13.digit.Segments.TOP;
-import static com.davidje13.digit.Segments.TR;
+import static com.davidje13.digit.Segment7.BASE;
+import static com.davidje13.digit.Segment7.BL;
+import static com.davidje13.digit.Segment7.BR;
+import static com.davidje13.digit.Segment7.MID;
+import static com.davidje13.digit.Segment7.TL;
+import static com.davidje13.digit.Segment7.TOP;
+import static com.davidje13.digit.Segment7.TR;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
 public class AsciiDisplay {
-	public List<String> toAsciiLines(EnumSet<Segments> segments) {
+	public List<String> toAsciiLines(EnumSet<Segment7> segments) {
 		return asList(
 				" " + ifPresent(segments, TOP, "_") + " ",
 				ifPresent(segments, TL, "|") + ifPresent(segments, MID, "_") + ifPresent(segments, TR, "|"),
@@ -26,14 +26,14 @@ public class AsciiDisplay {
 		);
 	}
 
-	public List<String> toAsciiLines(Stream<EnumSet<Segments>> segments, CharSequence divider) {
+	public List<String> toAsciiLines(Stream<EnumSet<Segment7>> segments, CharSequence divider) {
 		List<List<String>> chars = segments
 				.map(this::toAsciiLines)
 				.collect(toList());
 		return joinAsciiLines(chars, divider);
 	}
 
-	private String ifPresent(EnumSet<Segments> segments, Segments segment, String value) {
+	private String ifPresent(EnumSet<Segment7> segments, Segment7 segment, String value) {
 		return segments.contains(segment) ? value : " ";
 	}
 
