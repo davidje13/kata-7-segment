@@ -13,36 +13,44 @@ import static com.davidje13.digit.Segment7.TOP;
 import static com.davidje13.digit.Segment7.TR;
 
 public class AsciiSegment7Font {
-	private final int scaleX;
 	private final int scaleY;
 
+	private final String horiz_on;
+	private final String horiz_space;
+
 	public AsciiSegment7Font(int scaleX, int scaleY) {
-		this.scaleX = scaleX;
 		this.scaleY = scaleY;
+		this.horiz_on = rep("_", scaleX);
+		this.horiz_space = rep(" ", scaleX);
 	}
 
 	public List<String> toAsciiLines(EnumSet<Segment7> segments) {
-		String topRep = ifPresent(segments, TL, "|") + rep(" ", scaleX) + ifPresent(segments, TR, "|");
-		String baseRep = ifPresent(segments, BL, "|") + rep(" ", scaleX) + ifPresent(segments, BR, "|");
+		String top  = segments.contains(TOP)  ? horiz_on : horiz_space;
+		String tl   = segments.contains(TL)   ? "|" : " ";
+		String tr   = segments.contains(TR)   ? "|" : " ";
+		String mid  = segments.contains(MID)  ? horiz_on : horiz_space;
+		String bl   = segments.contains(BL)   ? "|" : " ";
+		String br   = segments.contains(BR)   ? "|" : " ";
+		String base = segments.contains(BASE) ? horiz_on : horiz_space;
 
 		List<String> result = new ArrayList<>();
-		result.add(" " + rep(ifPresent(segments, TOP, "_"), scaleX) + " ");
+		result.add(" " + top + " ");
+
 		for (int i = 0; i < scaleY - 1; ++ i) {
-			result.add(topRep);
+			result.add(tl + horiz_space + tr);
 		}
-		result.add(ifPresent(segments, TL, "|") + rep(ifPresent(segments, MID, "_"), scaleX) + ifPresent(segments, TR, "|"));
+
+		result.add(tl + mid + tr);
+
 		for (int i = 0; i < scaleY - 1; ++ i) {
-			result.add(baseRep);
+			result.add(bl + horiz_space + br);
 		}
-		result.add(ifPresent(segments, BL, "|") + rep(ifPresent(segments, BASE, "_"), scaleX) + ifPresent(segments, BR, "|"));
+
+		result.add(bl + base + br);
 		return result;
 	}
 
-	private String ifPresent(EnumSet<Segment7> segments, Segment7 segment, String value) {
-		return segments.contains(segment) ? value : " ";
-	}
-
-	private String rep(String part, int quantity) {
+	private static String rep(String part, int quantity) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < quantity; ++ i) {
 			builder.append(part);
