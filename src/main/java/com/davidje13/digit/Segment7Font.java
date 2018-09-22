@@ -21,7 +21,7 @@ public class Segment7Font {
 		CHAR_LOOKUP.put('1', EnumSet.of(TR, BR));
 		CHAR_LOOKUP.put('2', EnumSet.of(TOP, TR, MID, BL, BASE));
 		CHAR_LOOKUP.put('3', EnumSet.of(TOP, TR, MID, BR, BASE));
-		CHAR_LOOKUP.put('4', EnumSet.of(TOP, TL, TR, MID, BR));
+		CHAR_LOOKUP.put('4', EnumSet.of(TL, TR, MID, BR));
 		CHAR_LOOKUP.put('5', EnumSet.of(TOP, TL, MID, BR, BASE));
 		CHAR_LOOKUP.put('6', EnumSet.of(TOP, TL, MID, BL, BR, BASE));
 		CHAR_LOOKUP.put('7', EnumSet.of(TOP, TR, BR));
@@ -30,6 +30,7 @@ public class Segment7Font {
 		CHAR_LOOKUP.put('^', EnumSet.of(TOP));
 		CHAR_LOOKUP.put('-', EnumSet.of(MID));
 		CHAR_LOOKUP.put('_', EnumSet.of(BASE));
+		CHAR_LOOKUP.put('=', EnumSet.of(MID, BASE));
 		CHAR_LOOKUP.put('a', EnumSet.of(TOP, TL, TR, MID, BL, BR));
 		CHAR_LOOKUP.put('b', EnumSet.of(TL, MID, BL, BR, BASE));
 		CHAR_LOOKUP.put('c', EnumSet.of(MID, BL, BASE));

@@ -22,7 +22,7 @@ public class Segment7FontTest {
 		assertThat(font.toSegments('1'), containsInAnyOrder(TR, BR));
 		assertThat(font.toSegments('2'), containsInAnyOrder(TOP, TR, MID, BL, BASE));
 		assertThat(font.toSegments('3'), containsInAnyOrder(TOP, TR, MID, BR, BASE));
-		assertThat(font.toSegments('4'), containsInAnyOrder(TOP, TL, TR, MID, BR));
+		assertThat(font.toSegments('4'), containsInAnyOrder(TL, TR, MID, BR));
 		assertThat(font.toSegments('5'), containsInAnyOrder(TOP, TL, MID, BR, BASE));
 		assertThat(font.toSegments('6'), containsInAnyOrder(TOP, TL, MID, BL, BR, BASE));
 		assertThat(font.toSegments('7'), containsInAnyOrder(TOP, TR, BR));
@@ -70,6 +70,7 @@ public class Segment7FontTest {
 		assertThat(font.toSegments('^'), containsInAnyOrder(TOP));
 		assertThat(font.toSegments('-'), containsInAnyOrder(MID));
 		assertThat(font.toSegments('_'), containsInAnyOrder(BASE));
+		assertThat(font.toSegments('='), containsInAnyOrder(MID, BASE));
 	}
 
 	@Test
