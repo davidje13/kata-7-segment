@@ -4,8 +4,6 @@ import com.davidje13.OptionParser.Options;
 import com.davidje13.digit.AsciiSegment7Font;
 import com.davidje13.digit.Segment7Font;
 
-import java.util.List;
-
 import static com.davidje13.collectors.NestedCollector.nested;
 import static java.util.stream.Collectors.joining;
 
@@ -19,11 +17,10 @@ public class Main {
 	}
 
 	String toAsciiSegments(CharSequence value) {
-		List<String> lines = value.chars()
+		return value.chars()
 				.mapToObj(font::toSegments)
 				.map(asciiFont::toAsciiLines)
-				.collect(nested(joining(" ")));
-		return String.join("\n", lines);
+				.collect(nested(joining(" "), joining("\n")));
 	}
 
 	public static void main(String[] args) {

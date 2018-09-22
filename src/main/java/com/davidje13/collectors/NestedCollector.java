@@ -12,15 +12,29 @@ import java.util.stream.Collector;
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 
-public class NestedCollector<T, A, R> implements Collector<List<? extends T>, List<A>, List<R>> {
-	private final Collector<T, A, R> subCollector;
+public class NestedCollector<T, A, I, R> implements Collector<List<? extends T>, List<A>, R> {
+	private final Collector<T, A, I> subCollector;
+	private final Collector<? super I, ?, R> secondaryCollector;
 
-	public static <T, R> NestedCollector<T, ?, R> nested(Collector<T, ?, R> subCollector) {
-		return new NestedCollector<>(subCollector);
+	public static <T, I, R> NestedCollector<T, ?, ?, R> nested(
+			Collector<T, ?, I> subCollector,
+			Collector<? super I, ?, R> secondaryCollector
+	) {
+		return new NestedCollector<>(subCollector, secondaryCollector);
 	}
 
-	private NestedCollector(Collector<T, A, R> subCollector) {
+	public static <T, R> NestedCollector<T, ?, ?, List<R>> nested(
+			Collector<T, ?, R> subCollector
+	) {
+		return nested(subCollector, toList());
+	}
+
+	private NestedCollector(
+			Collector<T, A, I> subCollector,
+			Collector<? super I, ?, R> secondaryCollector
+	) {
 		this.subCollector = subCollector;
+		this.secondaryCollector = secondaryCollector;
 	}
 
 	@Override
@@ -71,14 +85,14 @@ public class NestedCollector<T, A, R> implements Collector<List<? extends T>, Li
 		return this::combine;
 	}
 
-	private List<R> finish(List<A> acc) {
+	private R finish(List<A> acc) {
 		return acc.stream()
 				.map(subCollector.finisher())
-				.collect(toList());
+				.collect(secondaryCollector);
 	}
 
 	@Override
-	public Function<List<A>, List<R>> finisher() {
+	public Function<List<A>, R> finisher() {
 		return this::finish;
 	}
 
