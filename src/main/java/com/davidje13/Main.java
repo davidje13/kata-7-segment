@@ -27,6 +27,7 @@ public class Main {
 				new Segment7(),
 				new AsciiDisplay()
 		);
-		System.out.println(main.toAsciiSegments(args[0]));
+		String value = (args.length > 0) ? args[0] : "";
+		System.out.println(main.toAsciiSegments(value));
 	}
 }

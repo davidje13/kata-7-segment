@@ -39,6 +39,13 @@ public class MainIntegrationTest {
 		));
 	}
 
+	@Test
+	public void main_printsOnlyNewline_ifNoInputGiven() {
+		String out = getStdOutFrom(() -> Main.main(new String[]{}));
+
+		assertThat(out, equalTo("\n"));
+	}
+
 	private String getStdOutFrom(Runnable runnable) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		PrintStream stdout = System.out;
