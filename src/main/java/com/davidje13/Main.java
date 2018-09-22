@@ -1,5 +1,6 @@
 package com.davidje13;
 
+import com.davidje13.OptionParser.Options;
 import com.davidje13.digit.AsciiSegment7Font;
 import com.davidje13.digit.Segment7Font;
 
@@ -26,11 +27,13 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		Options options = new OptionParser().parseOptions(args);
+
 		Main main = new Main(
 				new Segment7Font(),
-				new AsciiSegment7Font()
+				new AsciiSegment7Font(options.getScaleX(), options.getScaleY())
 		);
-		String value = (args.length > 0) ? args[0] : "";
-		System.out.println(main.toAsciiSegments(value));
+
+		System.out.println(main.toAsciiSegments(options.getMessage()));
 	}
 }

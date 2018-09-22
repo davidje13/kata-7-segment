@@ -21,6 +21,30 @@ public class MainIntegrationTest {
 	}
 
 	@Test
+	public void main_joinsAllArgumentsWithSpaces() {
+		String out = getStdOutFrom(() -> Main.main(new String[]{"1", "3"}));
+
+		assertThat(out, equalTo(
+				"         _ \n" +
+				"  |      _|\n" +
+				"  |      _|\n"
+		));
+	}
+
+	@Test
+	public void main_usesFlagsToConfigureSize() {
+		String out = getStdOutFrom(() -> Main.main(new String[]{"--size=3x2", "8"}));
+
+		assertThat(out, equalTo(
+				" ___ \n" +
+				"|   |\n" +
+				"|___|\n" +
+				"|   |\n" +
+				"|___|\n"
+		));
+	}
+
+	@Test
 	public void main_supportsLetters() {
 		String out = getStdOutFrom(() -> Main.main(new String[]{"hi"}));
 

@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class MainTest {
 	private final Segment7Font font = new Segment7Font();
-	private final AsciiSegment7Font asciiFont = new AsciiSegment7Font();
+	private final AsciiSegment7Font asciiFont = new AsciiSegment7Font(1, 1);
 
 	private final Main main = new Main(font, asciiFont);
 
