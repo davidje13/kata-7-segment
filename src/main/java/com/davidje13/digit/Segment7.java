@@ -32,10 +32,6 @@ public class Segment7 {
 		CHAR_LOOKUP.put('-', EnumSet.of(MID));
 	}
 
-	public String toDigits(long value) {
-		return Long.toString(value);
-	}
-
 	public EnumSet<Segments> toSegments(char c) {
 		return CHAR_LOOKUP.getOrDefault(c, BLANK);
 	}

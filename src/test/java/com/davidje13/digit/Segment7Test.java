@@ -14,31 +14,10 @@ import static com.davidje13.digit.Segments.TOP;
 import static com.davidje13.digit.Segments.TR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
 public class Segment7Test {
 	private final Segment7 segment = new Segment7();
-
-	@Test
-	public void toDigits_breaksNumberIntoDigitsInBase10() {
-		assertThat(segment.toDigits(123), equalTo("123"));
-	}
-
-	@Test
-	public void toDigits_returnsOneDigitForZero() {
-		assertThat(segment.toDigits(0), equalTo("0"));
-	}
-
-	@Test
-	public void toDigits_SupportsLargeValues() {
-		assertThat(segment.toDigits(9999999999L), equalTo("9999999999"));
-	}
-
-	@Test
-	public void toDigits_SupportsNegativeValues() {
-		assertThat(segment.toDigits(-1), equalTo("-1"));
-	}
 
 	@Test
 	public void toSegments_returnsSegmentsFor0() {
