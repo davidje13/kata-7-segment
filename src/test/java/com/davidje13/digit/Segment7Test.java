@@ -12,6 +12,7 @@ import static com.davidje13.digit.Segments.MID;
 import static com.davidje13.digit.Segments.TL;
 import static com.davidje13.digit.Segments.TOP;
 import static com.davidje13.digit.Segments.TR;
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -81,7 +82,7 @@ public class Segment7Test {
 
 	@Test
 	public void toSegments_convertsWholeStrings() {
-		assertThat(segment.toSegments("01"), Matchers.<EnumSet<?>>contains(
+		assertThat(segment.toSegments("01").collect(toList()), Matchers.<EnumSet<?>>contains(
 				segment.toSegments('0'),
 				segment.toSegments('1')
 		));

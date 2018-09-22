@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static com.davidje13.digit.Segments.BASE;
 import static com.davidje13.digit.Segments.BL;
@@ -105,7 +106,7 @@ public class AsciiDisplayTest {
 
 	@Test
 	public void toAsciiLines_convertsWholeSequences() {
-		List<String> lines = display.toAsciiLines(asList(EnumSet.of(TOP), EnumSet.of(BASE)), " ");
+		List<String> lines = display.toAsciiLines(Stream.of(EnumSet.of(TOP), EnumSet.of(BASE)), " ");
 		assertThat(lines, contains(
 				" _     ",
 				"       ",

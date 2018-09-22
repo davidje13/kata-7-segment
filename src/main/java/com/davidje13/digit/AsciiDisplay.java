@@ -3,6 +3,7 @@ package com.davidje13.digit;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static com.davidje13.digit.Segments.BASE;
 import static com.davidje13.digit.Segments.BL;
@@ -25,8 +26,8 @@ public class AsciiDisplay {
 		);
 	}
 
-	public List<String> toAsciiLines(List<EnumSet<Segments>> segments, CharSequence divider) {
-		List<List<String>> chars = segments.stream()
+	public List<String> toAsciiLines(Stream<EnumSet<Segments>> segments, CharSequence divider) {
+		List<List<String>> chars = segments
 				.map(this::toAsciiLines)
 				.collect(toList());
 		return joinAsciiLines(chars, divider);

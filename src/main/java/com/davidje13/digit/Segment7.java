@@ -2,8 +2,8 @@ package com.davidje13.digit;
 
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static com.davidje13.digit.Segments.BASE;
 import static com.davidje13.digit.Segments.BL;
@@ -12,7 +12,6 @@ import static com.davidje13.digit.Segments.MID;
 import static com.davidje13.digit.Segments.TL;
 import static com.davidje13.digit.Segments.TOP;
 import static com.davidje13.digit.Segments.TR;
-import static java.util.stream.Collectors.toList;
 
 public class Segment7 {
 	private static final EnumSet<Segments> BLANK = EnumSet.noneOf(Segments.class);
@@ -36,9 +35,8 @@ public class Segment7 {
 		return CHAR_LOOKUP.getOrDefault(c, BLANK);
 	}
 
-	public List<EnumSet<Segments>> toSegments(CharSequence value) {
+	public Stream<EnumSet<Segments>> toSegments(CharSequence value) {
 		return value.chars()
-				.mapToObj((c) -> this.toSegments((char) c))
-				.collect(toList());
+				.mapToObj((c) -> this.toSegments((char) c));
 	}
 }

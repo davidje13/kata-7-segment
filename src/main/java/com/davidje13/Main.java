@@ -6,6 +6,7 @@ import com.davidje13.digit.Segments;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
 	private final Segment7 segment;
@@ -17,7 +18,7 @@ public class Main {
 	}
 
 	String toAsciiSegments(CharSequence value) {
-		List<EnumSet<Segments>> segments = segment.toSegments(value);
+		Stream<EnumSet<Segments>> segments = segment.toSegments(value);
 		List<String> lines = display.toAsciiLines(segments, " ");
 		return display.flattenAsciiLines(lines);
 	}
