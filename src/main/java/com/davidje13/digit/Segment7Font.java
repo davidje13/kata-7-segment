@@ -3,7 +3,6 @@ package com.davidje13.digit;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static com.davidje13.digit.Segment7.BASE;
 import static com.davidje13.digit.Segment7.BL;
@@ -63,8 +62,7 @@ public class Segment7Font {
 		return CHAR_LOOKUP.getOrDefault(Character.toLowerCase(c), BLANK);
 	}
 
-	public Stream<EnumSet<Segment7>> toSegments(CharSequence value) {
-		return value.chars()
-				.mapToObj((c) -> this.toSegments((char) c));
+	public EnumSet<Segment7> toSegments(int c) {
+		return toSegments((char) c);
 	}
 }

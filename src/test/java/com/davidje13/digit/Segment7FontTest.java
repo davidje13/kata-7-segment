@@ -1,9 +1,6 @@
 package com.davidje13.digit;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
-
-import java.util.EnumSet;
 
 import static com.davidje13.digit.Segment7.BASE;
 import static com.davidje13.digit.Segment7.BL;
@@ -12,7 +9,6 @@ import static com.davidje13.digit.Segment7.MID;
 import static com.davidje13.digit.Segment7.TL;
 import static com.davidje13.digit.Segment7.TOP;
 import static com.davidje13.digit.Segment7.TR;
-import static java.util.stream.Collectors.toList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
@@ -79,13 +75,5 @@ public class Segment7FontTest {
 	@Test
 	public void toSegments_returnsSegmentsForSpace() {
 		assertThat(font.toSegments(' '), hasSize(0));
-	}
-
-	@Test
-	public void toSegments_convertsWholeStrings() {
-		assertThat(font.toSegments("01").collect(toList()), Matchers.<EnumSet<?>>contains(
-				font.toSegments('0'),
-				font.toSegments('1')
-		));
 	}
 }
