@@ -11,6 +11,7 @@ import static com.davidje13.digit.Segment7.MID;
 import static com.davidje13.digit.Segment7.TL;
 import static com.davidje13.digit.Segment7.TOP;
 import static com.davidje13.digit.Segment7.TR;
+import static java.util.Collections.nCopies;
 
 public class AsciiSegment7Font {
 	private final int scaleY;
@@ -20,8 +21,8 @@ public class AsciiSegment7Font {
 
 	public AsciiSegment7Font(int scaleX, int scaleY) {
 		this.scaleY = scaleY;
-		this.horiz_on = rep("_", scaleX);
-		this.horiz_space = rep(" ", scaleX);
+		this.horiz_on = String.join("", nCopies(scaleX, "_"));
+		this.horiz_space = String.join("", nCopies(scaleX, " "));
 	}
 
 	public List<String> toAsciiLines(EnumSet<Segment7> segments) {
@@ -48,13 +49,5 @@ public class AsciiSegment7Font {
 
 		result.add(bl + base + br);
 		return result;
-	}
-
-	private static String rep(String part, int quantity) {
-		StringBuilder builder = new StringBuilder();
-		for (int i = 0; i < quantity; ++ i) {
-			builder.append(part);
-		}
-		return builder.toString();
 	}
 }
