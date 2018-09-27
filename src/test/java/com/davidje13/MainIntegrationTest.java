@@ -1,30 +1,30 @@
 package com.davidje13;
 
+import com.davidje13.testutil.IntegrationTestUtils.Output;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
+import static com.davidje13.testutil.IntegrationTestUtils.getOutputFrom;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class MainIntegrationTest {
 	@Test
 	public void main_convertsTheFirstArgumentToAscii_andPrintsToStdOut() {
-		String out = getStdOutFrom(() -> Main.main(new String[]{"123"}));
+		Output output = getOutputFrom(() -> Main.main(new String[]{"123"}));
 
-		assertThat(out, equalTo(
+		assertThat(output.out, equalTo(
 				"     _   _ \n" +
 				"  |  _|  _|\n" +
 				"  | |_   _|\n"
 		));
+		assertThat(output.err, equalTo(""));
 	}
 
 	@Test
 	public void main_joinsAllArgumentsWithSpaces() {
-		String out = getStdOutFrom(() -> Main.main(new String[]{"1", "3"}));
+		Output output = getOutputFrom(() -> Main.main(new String[]{"1", "3"}));
 
-		assertThat(out, equalTo(
+		assertThat(output.out, equalTo(
 				"         _ \n" +
 				"  |      _|\n" +
 				"  |      _|\n"
@@ -33,9 +33,9 @@ public class MainIntegrationTest {
 
 	@Test
 	public void main_usesFlagsToConfigureSize() {
-		String out = getStdOutFrom(() -> Main.main(new String[]{"--size=3x2", "8"}));
+		Output output = getOutputFrom(() -> Main.main(new String[]{"--size=3x2", "8"}));
 
-		assertThat(out, equalTo(
+		assertThat(output.out, equalTo(
 				" ___ \n" +
 				"|   |\n" +
 				"|___|\n" +
@@ -46,9 +46,9 @@ public class MainIntegrationTest {
 
 	@Test
 	public void main_supportsLetters() {
-		String out = getStdOutFrom(() -> Main.main(new String[]{"hi"}));
+		Output output = getOutputFrom(() -> Main.main(new String[]{"hi"}));
 
-		assertThat(out, equalTo(
+		assertThat(output.out, equalTo(
 				"       \n" +
 				"|_     \n" +
 				"| |   |\n"
@@ -57,21 +57,8 @@ public class MainIntegrationTest {
 
 	@Test
 	public void main_printsOnlyNewline_ifNoInputGiven() {
-		String out = getStdOutFrom(() -> Main.main(new String[]{}));
+		Output output = getOutputFrom(() -> Main.main(new String[]{}));
 
-		assertThat(out, equalTo("\n"));
-	}
-
-	private String getStdOutFrom(Runnable runnable) {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		PrintStream stdout = System.out;
-
-		try {
-			System.setOut(new PrintStream(out));
-			runnable.run();
-			return out.toString();
-		} finally {
-			System.setOut(stdout);
-		}
+		assertThat(output.out, equalTo("\n"));
 	}
 }
