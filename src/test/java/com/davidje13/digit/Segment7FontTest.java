@@ -2,6 +2,8 @@ package com.davidje13.digit;
 
 import org.junit.Test;
 
+import java.util.EnumSet;
+
 import static com.davidje13.digit.Segment7.BASE;
 import static com.davidje13.digit.Segment7.BL;
 import static com.davidje13.digit.Segment7.BR;
@@ -11,6 +13,7 @@ import static com.davidje13.digit.Segment7.TOP;
 import static com.davidje13.digit.Segment7.TR;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 
 public class Segment7FontTest {
@@ -76,5 +79,30 @@ public class Segment7FontTest {
 	@Test
 	public void toSegments_returnsSegmentsForSpace() {
 		assertThat(font.toSegments(' '), hasSize(0));
+	}
+
+	@Test
+	public void toSegments_returnsBlankForUnknownCharacters() {
+		assertThat(font.toSegments('@'), hasSize(0));
+	}
+
+	@Test
+	public void fromSegments_returnsAsciiForSegments() {
+		assertThat(font.fromSegments(EnumSet.of(TR, BR)), equalTo('1'));
+	}
+
+	@Test
+	public void fromSegments_returnsSpaceForBlank() {
+		assertThat(font.fromSegments(EnumSet.noneOf(Segment7.class)), equalTo(' '));
+	}
+
+	@Test
+	public void fromSegments_returnsFirstRegisteredValueIfDuplicatesAreFound() {
+		assertThat(font.fromSegments(EnumSet.of(TOP, TR, MID, BL, BASE)), equalTo('2'));
+	}
+
+	@Test
+	public void fromSegments_returnsReplacementCharacterForUnknownSegments() {
+		assertThat(font.fromSegments(EnumSet.of(BL)), equalTo('\uFFFD'));
 	}
 }

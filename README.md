@@ -33,3 +33,32 @@ The kata specification is here: http://codingdojo.org/kata/NumberToLCD/
 ./gradlew run --args='--size=3x2 0123'
 ./gradlew run --args='--size=3x2 -- --hi'
 ```
+
+To operate in reverse:
+
+```sh
+./gradlew installDist && ./build/install/seg7/bin/seg7 --reverse
+ ___
+|   | |               |
+|___| |___   ___   ___|
+|   | |   | |     |   |
+|   | |___| |___  |___|
+[Ctrl+D]
+```
+
+or pipe input directly:
+
+```sh
+./gradlew installDist
+./build/install/seg7/bin/seg7 --reverse <<< '
+ ___
+|   | |               |
+|___| |___   ___   ___|
+|   | |   | |     |   |
+|   | |___| |___  |___|
+'
+```
+
+or check reversibility:
+
+./build/install/seg7/bin/seg7 hello | ./build/install/seg7/bin/seg7 --reverse

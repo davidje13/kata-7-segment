@@ -4,6 +4,7 @@ import com.davidje13.testutil.IntegrationTestUtils.Output;
 import org.junit.Test;
 
 import static com.davidje13.testutil.IntegrationTestUtils.getOutputFrom;
+import static com.davidje13.testutil.IntegrationTestUtils.setStdInContent;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -60,5 +61,45 @@ public class MainIntegrationTest {
 		Output output = getOutputFrom(() -> Main.main(new String[]{}));
 
 		assertThat(output.out, equalTo("\n"));
+	}
+
+	@Test
+	public void main_reversesFromStdInIfRequested() {
+		setStdInContent(
+				"     _   _ \n" +
+				"  |  _|  _|\n" +
+				"  | |_   _|\n"
+		);
+		Output output = getOutputFrom(() -> Main.main(new String[]{"--reverse"}));
+
+		assertThat(output.out, equalTo("123\n"));
+		assertThat(output.err, equalTo(""));
+	}
+
+	@Test
+	public void main_reverse_ignoresBlankLines() {
+		setStdInContent(
+				"\n" +
+				"     _   _ \n" +
+				"  |  _|  _|\n" +
+				"  | |_   _|"
+		);
+		Output output = getOutputFrom(() -> Main.main(new String[]{"--reverse"}));
+
+		assertThat(output.out, equalTo("123\n"));
+		assertThat(output.err, equalTo(""));
+	}
+
+	@Test
+	public void main_reverse_allowsMissingFinalNewline() {
+		setStdInContent(
+				"     _   _ \n" +
+				"  |  _|  _|\n" +
+				"  | |_   _|"
+		);
+		Output output = getOutputFrom(() -> Main.main(new String[]{"--reverse"}));
+
+		assertThat(output.out, equalTo("123\n"));
+		assertThat(output.err, equalTo(""));
 	}
 }

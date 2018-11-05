@@ -20,6 +20,7 @@ class OptionParser {
 				options.scaleY = readNatural(size[1]);
 			}
 		});
+		OPTION_PARSERS.put("reverse", (options, value) -> options.reverse = true);
 	}
 
 	Options parseOptions(String[] args) {
@@ -37,7 +38,7 @@ class OptionParser {
 				if (parser == null) {
 					throw new IllegalArgumentException("Unknown flag " + arg);
 				}
-				parser.accept(options, parts[1]);
+				parser.accept(options, parts.length > 1 ? parts[1] : "");
 			} else {
 				options.messages.add(arg);
 			}
@@ -48,6 +49,7 @@ class OptionParser {
 	static class Options {
 		private int scaleX = 1;
 		private int scaleY = 1;
+		private boolean reverse = false;
 		private final List<String> messages = new ArrayList<>();
 
 		int getScaleX() {
@@ -56,6 +58,10 @@ class OptionParser {
 
 		int getScaleY() {
 			return scaleY;
+		}
+
+		boolean isReverse() {
+			return reverse;
 		}
 
 		String getMessage() {

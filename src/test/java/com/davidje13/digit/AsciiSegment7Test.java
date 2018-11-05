@@ -11,8 +11,13 @@ import static com.davidje13.digit.Segment7.MID;
 import static com.davidje13.digit.Segment7.TL;
 import static com.davidje13.digit.Segment7.TOP;
 import static com.davidje13.digit.Segment7.TR;
+import static com.davidje13.matchers.ThrowsExceptionMatcher.throwsException;
+import static java.util.Arrays.asList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.instanceOf;
 
 public class AsciiSegment7Test {
 	private final AsciiSegment7Font font = new AsciiSegment7Font(1, 1);
@@ -130,5 +135,170 @@ public class AsciiSegment7Test {
 				"|   |",
 				"|___|"
 		));
+	}
+
+	@Test
+	public void fromAsciiLines_returnsSegments() {
+		assertThat(font.fromAsciiLines(asList(
+				"   ",
+				"   ",
+				"  |"
+		)), containsInAnyOrder(BR));
+	}
+
+	@Test
+	public void fromAsciiLines_returnsAllIdentifiedSegments() {
+		assertThat(font.fromAsciiLines(asList(
+				" _ ",
+				"|_|",
+				"|_|"
+		)), containsInAnyOrder(TOP, TL, TR, MID, BL, BR, BASE));
+	}
+
+	@Test
+	public void fromAsciiLines_recognisesInflatedShapes() {
+		assertThat(font.fromAsciiLines(asList(
+				" ___ ",
+				"|    ",
+				"|___ ",
+				"    |",
+				" ___|"
+		)), containsInAnyOrder(TOP, TL, MID, BR, BASE));
+	}
+
+	@Test
+	public void fromAsciiLines_rejectsMalSizedInputs() {
+		assertThat(() -> font.fromAsciiLines(asList(
+				" ___ ",
+				"|    ",
+				"|___ ",
+				" ___|"
+		)), throwsException(instanceOf(IllegalArgumentException.class)));
+
+		assertThat(() -> font.fromAsciiLines(asList(
+				" _",
+				"|_",
+				" _"
+		)), throwsException(instanceOf(IllegalArgumentException.class)));
+
+		assertThat(() -> font.fromAsciiLines(asList(
+				" _ ",
+				"|_ "
+		)), throwsException(instanceOf(IllegalArgumentException.class)));
+	}
+
+	@Test
+	public void guessSegmentWidth_returnsLowestPossibleSegmentWidth() {
+		assertThat(font.guessSegmentWidth(asList(
+				" _ ",
+				"|_|",
+				"|_|"
+		), 1), equalTo(3));
+
+		assertThat(font.guessSegmentWidth(asList(
+				" __ ",
+				"|__|",
+				"|__|"
+		), 1), equalTo(4));
+
+		assertThat(font.guessSegmentWidth(asList(
+				" __ ",
+				"|  |",
+				"|__|",
+				"|  |",
+				"|__|"
+		), 1), equalTo(4));
+	}
+
+	@Test
+	public void guessSegmentWidth_checksMultipleSegmentBlocks() {
+		assertThat(font.guessSegmentWidth(asList(
+				" _   _ ",
+				"|_| |_|",
+				"|_| |_|"
+		), 1), equalTo(3));
+
+		assertThat(font.guessSegmentWidth(asList(
+				" __   __ ",
+				"|__| |__|",
+				"|__| |__|"
+		), 1), equalTo(4));
+
+		assertThat(font.guessSegmentWidth(asList(
+				" __   __ ",
+				"|  | |  |",
+				"|__| |__|",
+				"|  | |  |",
+				"|__| |__|"
+		), 1), equalTo(4));
+	}
+
+	@Test
+	public void guessSegmentWidth_assumesWhitespaceWhenLinesAreShort() {
+		assertThat(font.guessSegmentWidth(asList(
+				" __",
+				"|  | |  |",
+				"|__| |__|",
+				"|  | |",
+				"|__| |__"
+		), 1), equalTo(4));
+	}
+
+	@Test
+	public void guessSegmentWidth_checksWithGivenSpacing() {
+		assertThat(font.guessSegmentWidth(asList(
+				" _    _ ",
+				"|_|  |_|",
+				"|_|  |_|"
+		), 2), equalTo(3));
+
+		assertThat(font.guessSegmentWidth(asList(
+				" __     __ ",
+				"|__|   |__|",
+				"|__|   |__|"
+		), 3), equalTo(4));
+
+		assertThat(font.guessSegmentWidth(asList(
+				" __    __ ",
+				"|  |  |  |",
+				"|__|  |__|",
+				"|  |  |  |",
+				"|__|  |__|"
+		), 2), equalTo(4));
+	}
+
+	@Test
+	public void guessSegmentWidth_rejectsBlocksContainingNoise() {
+		assertThat(() -> font.guessSegmentWidth(asList(
+				" __   __ ",
+				"| !| |  |",
+				"|__| |__|",
+				"|  | |  |",
+				"|__| |__|"
+		), 1), throwsException(instanceOf(IllegalArgumentException.class)));
+
+		assertThat(() -> font.guessSegmentWidth(asList(
+				" __  !__ ",
+				"|  | |  |",
+				"|__| |__|",
+				"|  | |  |",
+				"|__| |__|"
+		), 1), throwsException(instanceOf(IllegalArgumentException.class)));
+
+		assertThat(() -> font.guessSegmentWidth(asList(
+				" __   __!",
+				"|  | |  |",
+				"|__| |__|",
+				"|  | |  |",
+				"|__| |__|"
+		), 1), throwsException(instanceOf(IllegalArgumentException.class)));
+
+		assertThat(() -> font.guessSegmentWidth(asList(
+				" __   __ ",
+				"|  | |  |",
+				"|__|!|__|",
+				"|  | |  |",
+				"|__| |__|"
+		), 1), throwsException(instanceOf(IllegalArgumentException.class)));
 	}
 }

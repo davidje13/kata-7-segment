@@ -1,9 +1,14 @@
 package com.davidje13.testutil;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 public class IntegrationTestUtils {
+	public static void setStdInContent(String input) {
+		System.setIn(new ByteArrayInputStream(input.getBytes()));
+	}
+
 	public static Output getOutputFrom(Runnable runnable) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ByteArrayOutputStream err = new ByteArrayOutputStream();

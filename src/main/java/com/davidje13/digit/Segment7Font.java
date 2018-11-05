@@ -15,8 +15,10 @@ import static com.davidje13.digit.Segment7.TR;
 public class Segment7Font {
 	private static final EnumSet<Segment7> BLANK = EnumSet.noneOf(Segment7.class);
 	private static final Map<Character, EnumSet<Segment7>> CHAR_LOOKUP = new HashMap<>();
+	private static final Map<EnumSet<Segment7>, Character> REVERSE_LOOKUP = new HashMap<>();
 
 	static {
+		CHAR_LOOKUP.put(' ', BLANK);
 		CHAR_LOOKUP.put('0', EnumSet.of(TOP, TL, TR, BL, BR, BASE));
 		CHAR_LOOKUP.put('1', EnumSet.of(TR, BR));
 		CHAR_LOOKUP.put('2', EnumSet.of(TOP, TR, MID, BL, BASE));
@@ -57,6 +59,8 @@ public class Segment7Font {
 		CHAR_LOOKUP.put('x', EnumSet.of(TL, TR, MID, BL, BR));
 		CHAR_LOOKUP.put('y', EnumSet.of(TL, TR, MID, BR, BASE));
 		CHAR_LOOKUP.put('z', EnumSet.of(TOP, TR, MID, BL, BASE));
+
+		CHAR_LOOKUP.forEach((c, s) -> REVERSE_LOOKUP.putIfAbsent(s, c));
 	}
 
 	public EnumSet<Segment7> toSegments(char c) {
@@ -65,5 +69,9 @@ public class Segment7Font {
 
 	public EnumSet<Segment7> toSegments(int c) {
 		return toSegments((char) c);
+	}
+
+	public char fromSegments(EnumSet<Segment7> segments) {
+		return REVERSE_LOOKUP.getOrDefault(segments, '\uFFFD');
 	}
 }

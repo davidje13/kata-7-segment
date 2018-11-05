@@ -31,6 +31,15 @@ public class OptionParserTest {
 	}
 
 	@Test
+	public void parseOptions_providesDefaultsForFlags() {
+		Options options = parser.parseOptions(new String[]{"a"});
+
+		assertThat(options.getScaleX(), equalTo(1));
+		assertThat(options.getScaleY(), equalTo(1));
+		assertThat(options.isReverse(), equalTo(false));
+	}
+
+	@Test
 	public void parseOptions_parsesSizeFlagWithOneValue() {
 		Options options = parser.parseOptions(new String[]{"--size=2"});
 
@@ -44,6 +53,13 @@ public class OptionParserTest {
 
 		assertThat(options.getScaleX(), equalTo(2));
 		assertThat(options.getScaleY(), equalTo(3));
+	}
+
+	@Test
+	public void parseOptions_parsesReverseFlag() {
+		Options options = parser.parseOptions(new String[]{"--reverse"});
+
+		assertThat(options.isReverse(), equalTo(true));
 	}
 
 	@Test
